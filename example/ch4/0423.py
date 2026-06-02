@@ -1,4 +1,5 @@
 # 0423.py
+# cv2.Mahalanobis()에 의한 통계적 거리 계산
 import cv2
 import numpy as np
 
