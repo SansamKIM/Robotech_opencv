@@ -1,4 +1,5 @@
 # 0802.py
+# 코너점 검출: cornerEigenValsAndVecs()
 import cv2
 import numpy as np
 #1

@@ -1,4 +1,5 @@
 # 0814.py
+# cv2.convexHull() 볼록 껍질
 import cv2
 import numpy as np
 

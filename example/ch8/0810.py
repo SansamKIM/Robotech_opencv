@@ -1,4 +1,5 @@
 # 0810.py
+# cv2.moments() 경계선 모멘트
 import cv2
 import numpy as np
 

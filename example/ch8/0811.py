@@ -1,4 +1,5 @@
 # 0811.py
+# Hu 불변 모멘트
 import cv2
 import numpy as np
 

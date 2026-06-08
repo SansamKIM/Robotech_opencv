@@ -1,4 +1,5 @@
 # 0813.py
+# 직선, 다각형, 타원, 근사 및 내부 점 확인
 import cv2
 import numpy as np
 
@@ -24,6 +25,10 @@ cv2.drawContours(dst, [cnt], 0, (255,0,0), 3)
 dst2 = dst.copy()
 rows,cols = dst2.shape[:2]
 [vx,vy,x,y] = cv2.fitLine(cnt, cv2.DIST_L2, 0, 0.01, 0.01)
+vx = vx.item()
+vy = vy.item()
+x = x.item()
+y = y.item()
 y1 =  int((-x*vy/vx) + y)
 y2 = int(((cols-x)*vy/vx)+y)
 cv2.line(dst2,(0,y1), (cols-1,y2),(0,0,255), 2)

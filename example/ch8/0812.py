@@ -1,4 +1,5 @@
 # 0812.py
+# 길이, 면적, 바운딩 사각형, 최소 면적 사각형, 최소 면적 원
 import cv2
 import numpy as np
 

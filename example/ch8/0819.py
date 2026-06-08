@@ -1,4 +1,5 @@
 # 0819.py
+# Haar-like 특징 1
 import cv2
 import numpy as np
 #1

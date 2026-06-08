@@ -1,4 +1,5 @@
 # 0817.py
+# cv2.integral() 적분 영상 1
 import cv2
 import numpy as np
 

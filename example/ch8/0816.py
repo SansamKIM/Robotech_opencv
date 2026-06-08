@@ -1,4 +1,5 @@
 # 0816.py
+# cv2.matchShapes() 모양 매칭
 import cv2
 import numpy as np
 

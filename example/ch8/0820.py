@@ -1,4 +1,5 @@
 # 0820.py
+# Haar-like 특징 2: 가능한 모든 특징
 import cv2
 import numpy as np
 

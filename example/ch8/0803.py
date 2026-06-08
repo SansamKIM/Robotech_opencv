@@ -1,4 +1,5 @@
 # 0803.py
+# 코너점 검출 1: cv2.cornerMinEigenVal()
 import cv2
 import numpy as np
 

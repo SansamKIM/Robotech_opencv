@@ -1,4 +1,5 @@
 # 0804.py
+# 코너점 검출 2: cornerHarris(), cornerSubPix()
 import cv2
 import numpy as np
 

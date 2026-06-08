@@ -1,4 +1,5 @@
 # 0807.py
+# 체스보드 패턴 코너점 검출: cv2.findChessboardCorners()
 import cv2
 import numpy as np
 

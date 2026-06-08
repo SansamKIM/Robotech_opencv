@@ -1,4 +1,5 @@
 # 0801.py
+# preCornerDetec() 코너점 검출
 import cv2
 import numpy as np
 #1

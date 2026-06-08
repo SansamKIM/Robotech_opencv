@@ -1,4 +1,5 @@
 # 0806.py
+# cv2.goodFeaturesToTrack() 코너점 검출
 import cv2
 import numpy as np
 

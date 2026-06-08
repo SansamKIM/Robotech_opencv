@@ -1,4 +1,5 @@
 # 0815.py
+# cv2.convexityDefects() 볼록 결합
 import cv2
 import numpy as np
 

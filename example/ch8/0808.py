@@ -1,4 +1,5 @@
 # 0808.py
+# 원 패턴 중심점 검출: cv2.findCirclesGrid()
 import cv2
 import numpy as np
 

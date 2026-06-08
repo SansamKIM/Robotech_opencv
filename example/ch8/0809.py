@@ -1,4 +1,5 @@
 # 0809.py
+# 영상 모멘트: cv2.moments()
 import cv2
 import numpy as np
 
