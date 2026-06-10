@@ -1,11 +1,11 @@
-# 1119.py
+# 1123.py
 import cv2
 import numpy as np
 np.set_printoptions(precision=2, suppress=True)
 
 #1: open video capture
 #cap = cv2.VideoCapture(0)
-cap = cv2.VideoCapture('./data/aruco6x6_250.mp4')
+cap = cv2.VideoCapture('./data/charuco6x6_250.mp4')
 if (not cap.isOpened()): 
      print('Error opening video')
      import sys
@@ -14,17 +14,16 @@ if (not cap.isOpened()):
 height, width = (int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)),
               int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)))
 imageSize = width, height
-      
+    
+   
 #2
 aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_250)
-nx = 2 
-ny = 2   
-board = cv2.aruco.GridBoard(size=(nx, ny),
-                            markerLength=1.0,
-                            markerSeparation= 0.1,
-                            dictionary = aruco_dict)
+nx = 3 
+ny = 3   
+board = cv2.aruco.CharucoBoard(size=(nx, ny), 
+                 squareLength=0.04, markerLength=0.02, dictionary=aruco_dict)
 
-#3: calibrate K, dists using calibrateCameraAruco()
+#3: calibrate K, dists using calibrateCameraCharuco()
 t = 0
 count = 0
 N_FRAMES = 20
@@ -44,22 +43,22 @@ while True:
           continue
           
      gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-     detector = cv2.aruco.ArucoDetector(aruco_dict, cv2.aruco.DetectorParameters())
-     corners, ids, rejected = detector.detectMarkers(gray)
-     #corners, ids, _, _=cv2.aruco.refineDetectedMarkers(gray, board, corners, ids, rejected)
-
+     corners, ids, rejected = cv2.aruco.detectMarkers(gray, aruco_dict)#, parameters=param)
+     corners, ids, _, _=cv2.aruco.refineDetectedMarkers(gray, board, corners, ids, rejected)
+                                                        
 #3-2
      if ids is None:
           cv2.imshow('frame',frame)
           key = cv2.waitKey(20)
           if key == 27:  break
           continue
-#3-3     
-     for i in range(len(corners)):
-          all_corners.append(corners[i])
-          for _id in ids[i]:
-               all_ids.append(_id)
-     marker_counter.append(len(corners))  # nx*ny
+#3-3
+     cv2.aruco.drawDetectedMarkers(frame, corners)                                                                                                      
+     ret, charucoCorners, charucoIds = cv2.aruco.interpolateCornersCharuco(corners, ids, gray, board)
+     if ret >= 4: # number of charucoCorners
+          all_corners.append(charucoCorners)
+          all_ids.append(charucoIds)
+#3-4 
      count += 1
      if count >= N_FRAMES:
           break
@@ -70,20 +69,14 @@ while True:
      key = cv2.waitKey(20)
      if key == 27:  break
           
-          
-#3-4: convert list to numpy's array          
-all_ids  = np.array(all_ids)
-marker_counter = np.array(marker_counter)
-
 #3-5
-errs, K, dists, rvecs, tvecs = cv2.aruco.calibrateCameraAruco(all_corners, all_ids, marker_counter,
-                                                              board, imageSize, None, None)
-#3-6
-np.savez('./data/calib_1119.npz', K=K, dists= dists)
+errs, K, dists, rvecs, tvecs =	cv2.aruco.calibrateCameraCharuco(all_corners, all_ids,
+                                                                 board, imageSize, None, None)
+                                                                                               
+np.savez('./data/calib_1123.npz', K=K, dists= dists)
 print("K=\n", K)
 print("dists=", dists)                                                                  
 
 #4: 
 if cap.isOpened(): cap.release()
 cv2.destroyAllWindows()
- 

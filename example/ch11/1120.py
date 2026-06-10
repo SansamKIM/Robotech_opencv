@@ -24,13 +24,13 @@ print("K=\n", K)
 print("dists=", dists)
     
 #3
-aruco_dict = cv2.aruco.Dictionary_get(cv2.aruco.DICT_6X6_250)
+aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_250)
 nx = 2 
 ny = 2   
-board = cv2.aruco.GridBoard_create(nx, ny,
-                                   markerLength=1.0,
-                                   markerSeparation= 0.1,
-                                   dictionary = aruco_dict, firstMarker=0)
+board = cv2.aruco.GridBoard(size=(nx, ny),
+                            markerLength=1.0,
+                            markerSeparation= 0.1,
+                            dictionary = aruco_dict)
 #4: 
 t = 0 # frame counter           
 while True:
@@ -39,7 +39,7 @@ while True:
      if not ret:
         break
      gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-     corners, ids, rejected = cv2.aruco.detectMarkers(gray, aruco_dict)#, parameters=param)
+     corners, ids, rejected = cv2.aruco.detectMarkers(gray, aruco_dict)
      corners, ids, _, _=cv2.aruco.refineDetectedMarkers(gray, board, corners, ids, rejected)
 
 #4-2
@@ -52,13 +52,14 @@ while True:
 #4-3: board pos 
      ret, rvec, tvec = cv2.aruco.estimatePoseBoard(corners, ids, board, K, dists, None, None)
 
-     cv2.aruco.drawAxis(frame, K, dists, rvec, tvec, 1.0)
+     if ret > 0:
+          cv2.drawFrameAxes(frame, K, dists, rvec, tvec, 1.0)
      cv2.aruco.drawDetectedMarkers(frame, corners)
 
 #4-4: markers' pose
      rvecs, tvecs, _ = cv2.aruco.estimatePoseSingleMarkers(corners, 0.05, K, dists)        
      for i in range(rvecs.shape[0]):
-            cv2.aruco.drawAxis(frame, K, dists, rvecs[i, :, :], tvecs[i, :, :], 0.03)      
+            cv2.drawFrameAxes(frame, K, dists, rvecs[i, :, :], tvecs[i, :, :], 0.03)      
 #4-5
      #print("t=", t)
      t += 1
